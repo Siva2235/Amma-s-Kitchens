@@ -1,0 +1,249 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>Explore Menu | Amma Kitchens</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'menu.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <img src="{% static 'images/logo1.png' %}" height="100" width="100"  alt="logo">
+            <button class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-menu" id="navMenu">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'menu' %}">Explore Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'special' %}">Special Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'payment' %}">Payment & delivery</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    
+                    <li class="nav-item">
+                        <a href="{% url 'logout' %}" id="navItem5">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a href="{% url 'user_login' %}">Login</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="cart-icon" onclick="openCartPopup()">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span id="cartCount">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    
+
+    <div class="cart-panel" id="cartPopup">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button class="close-btn" onclick="closeCartPopup()">&times;</button>
+        </div>
+        <div class="cart-body" id="cartBody"></div>
+        <div class="cart-footer" id="cartFooter">
+            <div class="cart-summary">
+                <div class="summary-item">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">Rs 0/-</span>
+                </div>
+                <div class="summary-item">
+                    <span>Taxes (5%):</span>
+                    <span id="taxes">Rs 0/-</span>
+                </div>
+                <div class="summary-item">
+                    <span>Delivery Fee:</span>
+                    <span>Rs 20/-</span>
+                </div>
+                <div class="summary-item total">
+                    <span>Total:</span>
+                    <span id="total">Rs 0/-</span>
+                </div>
+            </div>
+            <a href="{% url 'payment' %}">
+                <button class="checkout-btn">Place Order</button>
+            </a>
+        </div>
+    </div>
+    <div class="cart-overlay" onclick="closeCartPopup()"></div>
+
+    <div class="item-added-popup" id="itemAddedPopup">
+        ✅ Item Added
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+    </div>
+
+    <section class="categories-section">
+        <div class="container">
+            <div class="categories">
+                <div class="category active" onclick="filterMenu('All')">
+                    <i class="fas fa-book"></i>
+                    <span>All</span>
+                </div>
+                <div class="category" onclick="filterMenu('BreakFast')">
+                    <i class="fas fa-coffee"></i>
+                    <span>Breakfast</span>
+                </div>
+                <div class="category" onclick="filterMenu('Veg')">
+                    <i class="fas fa-carrot"></i>
+                    <span>Veg</span>
+                </div>
+                <div class="category" onclick="filterMenu('Non-Veg')">
+                    <i class="fa-solid fa-drumstick-bite"></i>
+                    <span>Non-Veg</span>
+                </div>
+                <div class="category" onclick="filterMenu('Soups')">
+                    <i class="fas fa-mug-hot"></i>
+                    <span>Soups</span>
+                </div>
+                <div class="category" onclick="filterMenu('Pasta')">
+                    <i class="fas fa-utensils"></i>
+                    <span>Pasta</span>
+                </div>
+                <div class="category" onclick="filterMenu('Snacks')">
+                    <i class="fas fa-cookie-bite"></i>
+                    <span>Snacks</span>
+                </div>
+                <div class="category" onclick="filterMenu('Starters')">
+                    <i class="fas fa-utensil-spoon"></i>
+                    <span>Starters</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="menu-section">
+        <div class="container">
+            <div class="menu-grid" id="menuGrid">
+                {% for item in break_fast %}
+                <div class="menu-card" data-category="{{ item.data_category }}">
+                    <img src="{{ item.image.url }}" alt="{{ item.name }}">
+                    <h3>{{ item.name }}</h3>
+                    <span class="price">Rs {{ item.price }}/-</span>
+                    {% if item.veg %}
+                    <span class="veg">🟢 Veg</span>
+                    {% else %}
+                    <span class="non-veg">🔴 Non-Veg</span>
+                    {% endif %}
+                    <button onclick="addToCart('{{ item.name }}', {{ item.price }}, '{{ item.image.url }}')">Add</button>
+                </div>
+                {% endfor %}
+
+                {% for item in veg %}
+                <div class="menu-card" data-category="{{ item.data_category }}">
+                    <img src="{{ item.image.url }}" alt="{{ item.name }}">
+                    <h3>{{ item.name }}</h3>
+                    <span class="price">Rs {{ item.price }}/-</span>
+                    {% if item.veg %}
+                    <span class="veg">🟢 Veg</span>
+                    {% else %}
+                    <span class="non-veg">🔴 Non-Veg</span>
+                    {% endif %}
+                    <button onclick="addToCart('{{ item.name }}', {{ item.price }}, '{{ item.image.url }}')">Add</button>
+                </div>
+                {% endfor %}
+
+                {% for item in non_veg %}
+                <div class="menu-card" data-category="{{ item.data_category }}">
+                    <img src="{{ item.image.url }}" alt="{{ item.name }}">
+                    <h3>{{ item.name }}</h3>
+                    <span class="price">Rs {{ item.price }}/-</span>
+                    {% if item.veg %}
+                    <span class="veg">🟢 Veg</span>
+                    {% else %}
+                    <span class="non-veg">🔴 Non-Veg</span>
+                    {% endif %}
+                    <button onclick="addToCart('{{ item.name }}', {{ item.price }}, '{{ item.image.url }}')">Add</button>
+                </div>
+                {% endfor %}
+
+                {% for item in soups %}
+                <div class="menu-card" data-category="{{ item.data_category }}">
+                    <img src="{{ item.image.url }}" alt="{{ item.name }}">
+                    <h3>{{ item.name }}</h3>
+                    <span class="price">Rs {{ item.price }}/-</span>
+                    {% if item.veg %}
+                    <span class="veg">🟢 Veg</span>
+                    {% else %}
+                    <span class="non-veg">🔴 Non-Veg</span>
+                    {% endif %}
+                    <button onclick="addToCart('{{ item.name }}', {{ item.price }}, '{{ item.image.url }}')">Add</button>
+                </div>
+                {% endfor %}
+
+                {% for item in pasta %}
+                <div class="menu-card" data-category="{{ item.data_category }}">
+                    <img src="{{ item.image.url }}" alt="{{ item.name }}">
+                    <h3>{{ item.name }}</h3>
+                    <span class="price">Rs {{ item.price }}/-</span>
+                    {% if item.veg %}
+                    <span class="veg">🟢 Veg</span>
+                    {% else %}
+                    <span class="non-veg">🔴 Non-Veg</span>
+                    {% endif %}
+                    <button onclick="addToCart('{{ item.name }}', {{ item.price }}, '{{ item.image.url }}')">Add</button>
+                </div>
+                {% endfor %}
+
+                {% for item in snacks %}
+                <div class="menu-card" data-category="{{ item.data_category }}">
+                    <img src="{{ item.image.url }}" alt="{{ item.name }}">
+                    <h3>{{ item.name }}</h3>
+                    <span class="price">Rs {{ item.price }}/-</span>
+                    {% if item.veg %}
+                    <span class="veg">🟢 Veg</span>
+                    {% else %}
+                    <span class="non-veg">🔴 Non-Veg</span>
+                    {% endif %}
+                    <button onclick="addToCart('{{ item.name }}', {{ item.price }}, '{{ item.image.url }}')">Add</button>
+                </div>
+                {% endfor %}
+
+
+                
+                {% for item in starters %}
+                <div class="menu-card" data-category="{{ item.data_category }}">
+                    <img src="{{ item.image.url }}" alt="{{ item.name }}">
+                    <h3>{{ item.name }}</h3>
+                    <span class="price">Rs {{ item.price }}/-</span>
+                    {% if item.veg %}
+                    <span class="veg">🟢 Veg</span>
+                    {% else %}
+                    <span class="non-veg">🔴 Non-Veg</span>
+                    {% endif %}
+                    <button onclick="addToCart('{{ item.name }}', {{ item.price }}, '{{ item.image.url }}')">Add</button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Amma Kitchens. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'menu.js' %}"></script>
+</body>
+</html>

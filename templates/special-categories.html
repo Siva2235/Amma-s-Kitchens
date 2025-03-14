@@ -1,0 +1,218 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>Special Categories | Amma Kitchens</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'special-categories.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <img src="{% static 'images/logo1.png' %}" height="100" width="100"  alt="logo">
+            <button class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-menu" id="navMenu">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'menu' %}">Explore Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'special' %}">Special Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'payment' %}">Payment & delivery</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    
+                    <li class="nav-item">
+                        <a href="{% url 'logout' %}" id="navItem5">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a href="{% url 'user_login' %}">Login</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="cart-icon" onclick="openCartPopup()">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span id="cartCount">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="special-header">
+        <div class="container">
+            <h1><i class="fas fa-star"></i> Special Categories</h1>
+            <p>Discover our exclusive dishes and special combinations</p>
+        </div>
+    </header>
+
+    <div class="cart-panel" id="cartPopup">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button class="close-btn" onclick="closeCartPopup()">&times;</button>
+        </div>
+        <div class="cart-body" id="cartBody"></div>
+        <div class="cart-footer" id="cartFooter">
+            <div class="cart-summary">
+                <div class="summary-item">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">Rs 0/-</span>
+                </div>
+                <div class="summary-item">
+                    <span>Taxes (5%):</span>
+                    <span id="taxes">Rs 0/-</span>
+                </div>
+                <div class="summary-item">
+                    <span>Delivery Fee:</span>
+                    <span>Rs 20/-</span>
+                </div>
+                <div class="summary-item total">
+                    <span>Total:</span>
+                    <span id="total">Rs 0/-</span>
+                </div>
+            </div>
+            <a href="{% url 'payment' %}">
+                <button class="checkout-btn">Place Order</button>
+            </a>
+        </div>
+    </div>
+    <div class="cart-overlay" onclick="closeCartPopup()"></div>
+
+    <div class="item-added-popup" id="itemAddedPopup">
+        ✅ Item Added
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+    </div>
+
+    <main class="container">
+        <section class="category-section">
+            <h2>Festival Specials</h2>
+            <div class="special-grid">
+                {% for items in festival_specials %}
+                <div class="special-card">
+                    <div class="badge">{{items.badge}}</div>
+                    <img src="{{items.img.url}}" alt="{{items.item_name}}">
+                    <div class="card-content">
+                        <h3>{{items.item_name}}</h3>
+                        <p>{{items.description}}</p>
+                        <span class="price">Rs {{ items.price }}/-</span>
+                        <button onclick="addToCart('{{ items.item_name }}', {{ items.price }}, '{{ items.img.url }}')">Add</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="category-section">
+            <h2>Family Packages</h2>
+            <div class="special-grid">
+                {% for items in family_packages %}
+                <div class="special-card">
+                    <div class="badge">{{items.badge}}</div>
+                    <img src="{{items.img.url}}" alt="{{items.item_name}}">
+                    <div class="card-content">
+                        <h3>{{items.item_name}}</h3>
+                        <p>{{items.description}}</p>
+                        <span class="price">Rs {{ items.price }}/-</span>
+                        <button onclick="addToCart('{{ items.item_name }}', {{ items.price }}, '{{ items.img.url }}')">Add</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="category-section">
+            <h2>Chef's Special</h2>
+            <div class="special-grid">
+                {% for items in chef %}
+                <div class="special-card">
+                    <div class="badge">{{items.badge}}</div>
+                    <img src="{{items.img.url}}" alt="{{items.item_name}}">
+                    <div class="card-content">
+                        <h3>{{items.item_name}}</h3>
+                        <p>{{items.description}}</p>
+                        <span class="price">Rs {{ items.price }}/-</span>
+                        <button onclick="addToCart('{{ items.item_name }}', {{ items.price }}, '{{ items.img.url }}')">Add</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="category-section">
+            <h2>Refreshing Drinks</h2>
+            <div class="special-grid">
+                {% for items in refreshing_drinks %}
+                <div class="special-card">
+                    <div class="badge">{{items.badge}}</div>
+                    <img src="{{items.img.url}}" alt="{{items.item_name}}">
+                    <div class="card-content">
+                        <h3>{{items.item_name}}</h3>
+                        <p>{{items.description}}</p>
+                        <span class="price">Rs {{ items.price }}/-</span>
+                        <button onclick="addToCart('{{ items.item_name }}', {{ items.price }}, '{{ items.img.url }}')">Add</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="category-section">
+            <h2>Quick Bites</h2>
+            <div class="special-grid">
+                {% for items in quick_bites %}
+                <div class="special-card">
+                    <div class="badge">{{items.badge}}</div>
+                    <img src="{{items.img.url}}" alt="{{items.item_name}}">
+                    <div class="card-content">
+                        <h3>{{items.item_name}}</h3>
+                        <p>{{items.description}}</p>
+                        <span class="price">Rs {{ items.price }}/-</span>
+                        <button onclick="addToCart('{{ items.item_name }}', {{ items.price }}, '{{ items.img.url }}')">Add</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="category-section">
+            <h2>Combo Offers</h2>
+            <div class="special-grid">
+                {% for items in combo_offers %}
+                <div class="special-card">
+                    <div class="badge">{{items.badge}}</div>
+                    <img src="{{items.img.url}}" alt="{{items.item_name}}">
+                    <div class="card-content">
+                        <h3>{{items.item_name}}</h3>
+                        <p>{{items.description}}</p>
+                        <span class="price">Rs {{ items.price }}/-</span>
+                        <button onclick="addToCart('{{ items.item_name }}', {{ items.price }}, '{{ items.img.url }}')">Add</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Amma Kitchens. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'menu.js' %}"></script>
+</body>
+</html> 

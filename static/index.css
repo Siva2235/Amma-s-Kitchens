@@ -1,0 +1,577 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3px 20px;
+}
+
+/* Navbar Styles */
+.navbar {
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    height: 110px;
+    width: 100%;
+    z-index: 1000;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.1rem 20px;
+}
+
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #333;
+    cursor: pointer;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+}
+
+.nav-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    margin-left: 2rem;
+}
+
+.nav-item a {
+    color: #323f4b;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    padding: 0.5rem 0;
+    position: relative;
+}
+
+.nav-item a:hover
+ {
+    color: #e74c3c;
+}
+
+/* Hero Section */
+.hero {
+    background: url('images/banner1.jpg') center/cover no-repeat;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.banner-heading {
+    color: white;
+    font-size: 45px;
+    font-weight: 300;
+    margin-bottom: 1rem;
+}
+
+.banner-caption {
+    color: #f5f7fa;
+    font-size: 24px;
+    font-weight: 300;
+    margin-bottom: 2rem;
+}
+
+.custom-button {
+    color: white;
+    background-color: #d0b200;
+    width: 130px;
+    height: 50px;
+    border-width: 0;
+    border-radius: 8px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.custom-button:hover {
+    background-color: #b39a00;
+}
+
+.custom-outline-button {
+    color: #d0b200;
+    background-color: transparent;
+    width: 130px;
+    height: 50px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #d0b200;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.custom-outline-button:hover {
+    background-color: #d0b200;
+    color: white;
+}
+
+/* Search Box */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 0 20px;
+    margin-bottom: 15px;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 50px;
+    padding: 5px;
+    width: 50vw;
+    max-width: 500px;
+    height: 65px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    border: 3px solid #ffffff;
+}
+
+.search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 15px;
+    font-size: 18px;
+    border-radius: 50px;
+    background: transparent;
+    width: 100%;
+}
+
+.search-button {
+    background: #ff9900;
+    border: none;
+    color: white;
+    font-size: 20px;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-color: orange;
+}
+
+.search-button:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Why Choose Us Section */
+.wcu-section {
+    padding: 5rem 0;
+    background: white;
+}
+
+.wcu-section-heading {
+    text-align: center;
+    color: #183b56;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.wcu-section-description {
+    color: #5a7184;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.wcu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.wcu-card {
+    text-align: center;
+    background-color: white;
+    border: 1px solid #e5eaf4;
+    border-radius: 16px;
+    padding: 2rem;
+}
+
+.wcu-card-image {
+    width: 87px;
+    height: 90px;
+    margin-bottom: 1rem;
+}
+
+.wcu-card-title {
+    color: #323f4b;
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.wcu-card-description {
+    color: #7b8794;
+    font-size: 16px;
+}
+
+.offers {
+    color: #323f4b;
+    font-style: italic;
+    font-weight: 600;
+}
+
+/* Exclusive Deals Section */
+.exclusive-section {
+    padding: 5rem 0;
+    background: transparent;
+}
+
+.exclusive {
+    font-size: 45px;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.exclusive-offers {
+    color: #d0b200;
+    font-size: 25px;
+}
+
+.exclusive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 0 20px;
+}
+
+.exclusive-image {
+    width: 100%;
+    height: 280px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    object-fit: cover;
+}
+
+.image-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+    transition: transform 0.4s ease-in-out;
+}
+
+.image-container:hover {
+    transform: scale(1.05);
+}
+
+.discount-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: red;
+    color: white;
+    padding: 5px 12px;
+    font-weight: bold;
+    font-size: 14px;
+    border-radius: 5px;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+.rating-badge {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: #2329D6;
+    color: yellow;
+    padding: 5px 12px;
+    font-weight: bold;
+    font-size: 14px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Categories Section */
+.categories-section {
+    padding: 5rem 0;
+    background: white;
+}
+
+.categories-section h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2.5rem;
+    color: #2d3436;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3.5rem;
+    text-align: center;
+}
+
+.category-item img {
+    width: 300px;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    height: 200px;
+}
+
+/* Thanking Customers Section */
+.thanking-customers-section {
+    background-color: #d0b2001a;
+    padding: 5rem 0;
+}
+
+.thanking-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+.thanking-customers-section-heading {
+    color: #183b56;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.thanking-customers-section-description {
+    color: #5a7184;
+    font-size: 16px;
+    margin-bottom: 2rem;
+}
+
+.thanking-customers-section-img {
+    width: 270px;
+    margin-bottom: 20px;
+}
+
+.mobile-gift {
+    display: none;
+}
+
+/* Follow Us Section */
+.follow-us-section {
+    background-color: white;
+    padding: 5rem 0;
+}
+
+.follow-us-section-heading {
+    text-align: center;
+    color: #183b56;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+
+.follow-us-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.follow-us-icon-container {
+    background-color: #faf7e8;
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    margin: 15px;
+    padding-top: 22px;
+    padding-bottom: 14px;
+    padding-right: 16px;
+    padding-left: 22px;
+}
+
+.icon {
+    color: #d0b200;
+    font-size: 35px;
+}
+
+/* Footer Section */
+.footer-section {
+    background-color: #0d2436;
+    padding: 5rem 0;
+    color: white;
+}
+
+.footer-content {
+    text-align: center;
+}
+
+.food-munch-logo {
+    margin-bottom: 1rem;
+}
+
+.footer-section-mail-id {
+    color: #959ead;
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 1rem;
+}
+
+.footer-section-address {
+    color: #959ead;
+    font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        padding: 1rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-menu.active {
+        display: block;
+    }
+
+    .nav-list {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-item {
+        margin: 0.5rem 0;
+    }
+
+    .banner-heading {
+        font-size: 35px;
+    }
+
+    .banner-caption {
+        font-size: 20px;
+    }
+
+    .search-box {
+        width: 80vw;
+        height: 55px;
+    }
+
+    .search-input {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .search-button {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+
+    .exclusive {
+        font-size: 35px;
+    }
+
+    .exclusive-offers {
+        font-size: 20px;
+    }
+
+    .thanking-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .mobile-gift {
+        display: block;
+    }
+
+    .desktop-gift {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-box {
+        width: 90vw;
+        height: 50px;
+    }
+
+    .search-input {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .search-button {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+
+    .banner-heading {
+        font-size: 30px;
+    }
+
+    .banner-caption {
+        font-size: 18px;
+    }
+
+    .exclusive {
+        font-size: 30px;
+    }
+
+    .exclusive-offers {
+        font-size: 18px;
+    }
+}

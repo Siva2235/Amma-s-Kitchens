@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Amma Kitchens{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <img src="{% static 'images/logo1.png' %}" height="100" width="100"  alt="logo">
+            <ul class="nav-menu">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'menu' %}">Explore Menu</a></li>
+                <li><a href="{% url 'special' %}">Special Categories</a></li>
+                <li><a href="{% url 'payment' %}" class="">Payment & Delivery</a></li>
+                {% if user.is_authenticated %}
+                    
+                    <li class="nav-item">
+                        <a href="{% url 'logout' %}">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a href="{% url 'user_login' %}">Login</a>
+                    </li>
+                    {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        {% block content %}
+        <!-- Child templates will override this block -->
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Amma Kitchens. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

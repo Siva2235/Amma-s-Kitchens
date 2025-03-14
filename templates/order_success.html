@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <h2>🎉 Order Placed Successfully!</h2>
+    <p>Thank you for ordering from Amma Kitchens. Your order status is updated accordingly.</p>
+
+    <h3>Order Details</h3>
+    <ul>
+        <li><strong>Order ID:</strong> {{ order.id }}</li>
+        <li><strong>Delivery Address:</strong> {{ order.delivery_address }}</li>
+        <li><strong>Phone Number:</strong> {{ order.phone_number }}</li>
+        <li><strong>Payment Method:</strong> {{ order.payment_method }}</li>
+        <li><strong>Total Amount:</strong> ₹{{ order.total_amount }}</li>
+        <li><strong>Status:</strong> 
+            {% if order.status == "success" %}
+                <span style="color: green; font-weight: bold;">{{ order.status }}</span>
+            {% else %}
+                <span style="color: red; font-weight: bold;">{{ order.status }}</span>
+            {% endif %}
+        </li>
+    </ul>
+
+    <h3>Ordered Items</h3>
+    <ul>
+        {% for item in order_items %}
+            <li>{{ item.name }} - ₹{{ item.price }} x {{ item.quantity }}</li>
+        {% endfor %}
+    </ul>
+
+    
+    
+</div>
+{% endblock %}

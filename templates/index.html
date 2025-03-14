@@ -1,0 +1,179 @@
+{%load static %}
+{% static "images" as baseUrl %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amma Kitchens</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'index.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+                <img src="{% static 'images/logo1.png' %}" height="120" width="120"  alt="logo">
+            <button class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-menu" id="navMenu">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'menu' %}">Explore Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'special' %}">Special Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'payment' %}">Payment & delivery</a>
+                    </li>
+
+                    {% if user.is_authenticated %}
+                    
+                    <li class="nav-item">
+                        <a href="{% url 'logout' %}" >Logout</a>
+                    </li>
+                    {% else %}
+
+
+                    <li class="nav-item">
+                        <a href="{% url 'user_login' %}" >Login</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="banner-heading">Delicious Food, Delivered to Your Doorstep</h1>
+            <p class="banner-caption">Order your favorite meals from Amma's Kitchens.</p>
+            
+            
+            <a href="{% url 'menu' %}">    
+                <button class="custom-button">View Menu</button>
+            </a>
+        </div>
+    </section>
+
+    <!-- Why choose us -->
+    <section class="wcu-section">
+        <div class="container">
+            <h1 class="wcu-section-heading">Why Choose Us?</h1>
+            <p class="wcu-section-description">
+                We use both original recipes and classic versions of famous food items.
+            </p>
+            <div class="wcu-grid">
+
+                {% for chose in wcu %}
+                <div class="wcu-card">
+                    <img src="{{chose.img.url}}" class="wcu-card-image" />
+                    <h1 class="wcu-card-title">{{chose.name}}</h1>
+                    <p class="wcu-card-description">
+                        {{chose.description}}
+                    </p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Exclusive deals -->
+    <section class="exclusive-section">
+        <div class="container">
+            <div class="exclusive">
+                <h2>Exclusive Deals 🥳 <span class="exclusive-offers"> Upto 50% OFF</span> in Amma Kitchens</h2>
+            </div>
+            <div class="exclusive-grid">
+
+                {% for offer in exclusive_offers %}
+                <div class="exclusive-item">
+                    <div class="image-container">
+                        <img src="{{offer.img.url}}" class="exclusive-image">
+                        <span class="discount-badge">{{offer.discount}} OFF</span>
+                        <span class="rating-badge"><i class="fas fa-star"></i>{{offer.rating}}</span>
+                    </div>
+                </div>
+                
+               {% endfor %}
+               
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Categories -->
+    <section class="categories-section">
+        <div class="container">
+            <h2>Popular Categories</h2>
+
+            
+            <div class="categories-grid">
+                {%for categories in popular_foods %}
+                <div class="category-item">
+                    <img src="{{categories.img.url}}" alt="Biryani">
+                    <h3>{{categories.title}}</h3>
+                </div>
+                {% endfor %}
+            </div>
+            
+        </div>
+    </section>
+
+    <div class="thanking-customers-section">
+        <div class="container">
+            <div class="thanking-content">
+                <div class="thanking-text">
+                    <h1 class="thanking-customers-section-heading">
+                        Thank you for being a valuable customer to us.
+                    </h1>
+                    <div class="mobile-gift">
+                        <img src="{% static 'images/gift.png' %}" class="thanking-customers-section-img" />
+                    </div>
+                </div>
+                <div class="desktop-gift">
+                    <img src="{% static 'images/gift.png' %}" class="thanking-customers-section-img" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="follow-us-section">
+        <div class="container">
+            <h1 class="follow-us-section-heading">Follow Us</h1>
+            <div class="follow-us-icons">
+                <div class="follow-us-icon-container">
+                 <a href="https://x.com/ammaskitchen20" target="_blank">
+                     <i class="fa-brands fa-x-twitter icon"></i>
+                </a>
+                </div>
+                <div class="follow-us-icon-container">
+                    <a href="https://www.instagram.com/ammas_kitchen20/" target="_blank">
+                    <i class="fab fa-instagram icon"></i>
+                    </a>
+                </div>
+                <div class="follow-us-icon-container">
+                    <a href="https://www.facebook.com/share/1Km7wEatGw/" target="_blank">
+                    <i class="fab fa-facebook icon"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-section">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 Amma Kitchens. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'index.js' %}"></script>
+</body>
+</html>
